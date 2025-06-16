@@ -1,7 +1,10 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+### Get all tasks
+
 GET http://localhost:5078/tasks
 
-###
+### Post task 1
 
 POST http://localhost:5078/tasks
 content-type: application/json
@@ -13,7 +16,7 @@ content-type: application/json
   "isCompleted": false
 }
 
-###
+### Post task 2
 
 POST http://localhost:5078/tasks
 content-type: application/json
@@ -25,11 +28,11 @@ content-type: application/json
 }
 
 
-###
+### Get Task 2
 
 GET http://localhost:5078/tasks/2
 
-###
+### Delete
 
 DELETE http://localhost:5078/tasks/2
 
