@@ -33,11 +33,11 @@ List<Task> tasks = new List<Task>();
 
 #region Tasks
 
-app.MapGet("/tasks", () => tasks);
+app.MapGet("/tasks", (ITaskService service) => service.GetTasks());
 
-app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id) =>
+app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id, ITaskService service) =>
 {
-    Task? targetTask = tasks.SingleOrDefault(t => id == t.id);
+    Task? targetTask = service.GetTaskById(id);
 
     if (targetTask == null)
     {
@@ -48,10 +48,11 @@ app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id) =>
 
 });
 
-app.MapPost("/tasks", (Task task) =>
+app.MapPost("/tasks", (Task task, ITaskService service) =>
 {
-    tasks.Add(task);
+    service.AddTask(task);
     return TypedResults.Created("/tasks/{id}", task);
+
 }).AddEndpointFilter(async (context, next) => {     // Endpoint filter
     Task taskArguement = context.GetArgument<Task>(0);
     Dictionary<string, string[]> errors = new Dictionary<string, string[]>();
@@ -75,9 +76,9 @@ app.MapPost("/tasks", (Task task) =>
 
 });
 
-app.MapDelete("/tasks/{id}", (int id) =>
+app.MapDelete("/tasks/{id}", (int id, ITaskService service) =>
 {
-    tasks.RemoveAll(t => id == t.id);
+    service.DeleteTaskById(id);
     return TypedResults.NoContent();
 });
 
