@@ -6,6 +6,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Host configuration goes here
 
+// - Register service
+builder.Services.AddSingleton<ITaskService>(new InMemoryTaskSerivce());
+
 WebApplication app = builder.Build();
 
 
@@ -85,3 +88,32 @@ app.MapDelete("/tasks/{id}", (int id) =>
 app.Run();
 
 public record Task(int id, string Name, DateTime DueDate, bool IsCompleted);
+
+interface ITaskService {
+    Task? GetTaskById(int id);
+    List<Task> GetTasks();
+    void DeleteTaskById(int id);
+    Task AddTask(Task task);
+}
+
+
+class InMemoryTaskSerivce : ITaskService {
+    private readonly List<Task> _tasks = [];
+    
+    public Task AddTask(Task task) { 
+        _tasks.Add(task); 
+        return task; 
+    }
+    
+    public void DeleteTaskById(int id) {
+        _tasks.RemoveAll(task => id == task.id); 
+    }
+
+    public Task GetTaskById(int id) {
+        return _tasks.SingleOrDefault(t => id == t.id);
+    }
+
+    public List<Task> GetTasks() { 
+        return _tasks; 
+    }
+}
