@@ -45,11 +45,31 @@ app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id) =>
 
 });
 
-
 app.MapPost("/tasks", (Task task) =>
 {
     tasks.Add(task);
     return TypedResults.Created("/tasks/{id}", task);
+}).AddEndpointFilter(async (context, next) => {     // Endpoint filter
+    Task taskArguement = context.GetArgument<Task>(0);
+    Dictionary<string, string[]> errors = new Dictionary<string, string[]>();
+    if (taskArguement.DueDate < DateTime.UtcNow)
+    {
+        errors.Add(nameof(Task.DueDate), ["Cannot have due date in the past"]);
+    }
+
+    if (taskArguement.IsCompleted)
+    {
+        errors.Add(nameof(Task.IsCompleted), ["Cannot add completed task"]);
+    }
+
+    if (errors.Count > 0)
+    {
+        return Results.ValidationProblem(errors);
+    }
+
+    return await next(context);
+
+
 });
 
 app.MapDelete("/tasks/{id}", (int id) =>
@@ -64,4 +84,4 @@ app.MapDelete("/tasks/{id}", (int id) =>
 
 app.Run();
 
-public record Task(int id, string Name, DateTime DueDate, bool isCompleted);
+public record Task(int id, string Name, DateTime DueDate, bool IsCompleted);

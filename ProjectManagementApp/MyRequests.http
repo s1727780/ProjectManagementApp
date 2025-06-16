@@ -21,7 +21,7 @@ content-type: application/json
   "id": 2,
   "name": "Write Demo 2",
   "dueDate": "2025-06-21",
-  "isCompleted": true
+  "isCompleted": false
 }
 
 
@@ -34,17 +34,42 @@ GET http://localhost:5078/tasks/2
 DELETE http://localhost:5078/tasks/2
 
 
-### Redirect POST
 
-POST http://localhost:5078/todos
+### Redirect GET
+
+GET http://localhost:5078/todos/1
+
+
+### Endpoint filter past due
+
+POST http://localhost:5078/tasks
 content-type: application/json
 {
     "id": 3,
+    "name": "Endpoint past",
+    "dueDate": "2025-06-01",
+    "isCompleted": false
+}
+
+### Endpoint filter completed
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+    "id": 4,
     "name": "Redirect Demo ",
     "dueDate": "2025-06-21",
     "isCompleted": true
 }
 
-### Redirect GET
+### Endpoint filter past due
 
-GET http://localhost:5078/todos/1
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+    "id": 5,
+    "name": "Redirect Demo ",
+    "dueDate": "2025-06-01",
+    "isCompleted": true
+}
+
