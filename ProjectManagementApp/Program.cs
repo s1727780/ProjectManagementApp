@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Rewrite;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Host configuration goes here
 
 WebApplication app = builder.Build();
+
+
+// Middleware
+
+app.UseRewriter(new RewriteOptions().AddRedirect("todos/(.*)", "tasks/$1"));
+
+
+// API
 
 List<Task> tasks = new List<Task>();
 
