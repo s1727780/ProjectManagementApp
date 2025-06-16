@@ -11,7 +11,17 @@ WebApplication app = builder.Build();
 
 // Middleware
 
+// - Built-in
 app.UseRewriter(new RewriteOptions().AddRedirect("todos/(.*)", "tasks/$1"));
+
+// - Custom
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"{context.Request.Method} {context.Request.Path} {DateTime.UtcNow} Started");
+    await next(context);
+    Console.WriteLine($"{context.Request.Method} {context.Request.Path} {DateTime.UtcNow} Finished");
+});
+
 
 
 // API
