@@ -1,2 +1,34 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
-GET http://localhost:5078/
+GET http://localhost:5078/tasks
+
+###
+
+POST http://localhost:5078/tasks
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "Write Demo",
+  "dueDate": "2025-06-20",
+  "isCompleted": false
+}
+
+###
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+  "id": 2,
+  "name": "Write Demo 2",
+  "dueDate": "2025-06-21",
+  "isCompleted": true
+}
+
+
+###
+
+GET http://localhost:5078/tasks/2
+
+###
+
+DELETE http://localhost:5078/tasks/2

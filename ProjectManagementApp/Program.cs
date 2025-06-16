@@ -9,15 +9,17 @@ WebApplication app = builder.Build();
 
 List<Task> tasks = new List<Task>();
 
+#region Tasks
+
 app.MapGet("/tasks", () => tasks);
 
-app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound<int>> (int id) =>
+app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id) =>
 {
     Task? targetTask = tasks.SingleOrDefault(t => id == t.id);
 
     if (targetTask == null)
     {
-        return TypedResults.NotFound(id);
+        return TypedResults.NotFound();
     }
 
     return TypedResults.Ok(targetTask);
@@ -36,6 +38,10 @@ app.MapDelete("/tasks/{id}", (int id) =>
     tasks.RemoveAll(t => id == t.id);
     return TypedResults.NoContent();
 });
+
+
+#endregion
+
 
 app.Run();
 
