@@ -1,2 +1,78 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
-GET http://localhost:5078/
+
+### Get all tasks
+
+GET http://localhost:5078/tasks
+
+### Post task 1
+
+POST http://localhost:5078/tasks
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "Write Demo",
+  "dueDate": "2025-06-20",
+  "isCompleted": false
+}
+
+### Post task 2
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+  "id": 2,
+  "name": "Write Demo 2",
+  "dueDate": "2025-06-21",
+  "isCompleted": false
+}
+
+
+### Get Task 2
+
+GET http://localhost:5078/tasks/2
+
+### Delete
+
+DELETE http://localhost:5078/tasks/2
+
+
+
+### Redirect GET
+
+GET http://localhost:5078/todos/1
+
+
+### Endpoint filter past due
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+    "id": 3,
+    "name": "Endpoint past",
+    "dueDate": "2025-06-01",
+    "isCompleted": false
+}
+
+### Endpoint filter completed
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+    "id": 4,
+    "name": "Redirect Demo ",
+    "dueDate": "2025-06-21",
+    "isCompleted": true
+}
+
+### Endpoint filter past due
+
+POST http://localhost:5078/tasks
+content-type: application/json
+{
+    "id": 5,
+    "name": "Redirect Demo ",
+    "dueDate": "2025-06-01",
+    "isCompleted": true
+}
+
