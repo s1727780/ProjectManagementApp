@@ -12,7 +12,7 @@ namespace ProjectManagementApp.Model
     {
         public DbSet<Project> Projects { get; set; }
 
-        public ProjectContext(DbContextOptions options) : base(options)
+        public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
         {
 
         }

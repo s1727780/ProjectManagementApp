@@ -14,7 +14,7 @@ namespace ProjectManagementApp.Model
     {
         public DbSet<Task> Tasks { get; set; }
 
-        public TaskContext(DbContextOptions options) : base(options)
+        public TaskContext(DbContextOptions<TaskContext> options) : base(options)
         {
 
         }
