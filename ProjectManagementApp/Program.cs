@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Rewrite;
+using ProjectManagementApp.Model;
+using Task = ProjectManagementApp.Model.Task;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -88,14 +90,6 @@ app.MapDelete("/tasks/{id}", (int id, ITaskService service) =>
 
 app.Run();
 
-public record Task(int id, string Name, DateTime DueDate, bool IsCompleted);
-
-interface ITaskService {
-    Task? GetTaskById(int id);
-    List<Task> GetTasks();
-    void DeleteTaskById(int id);
-    Task AddTask(Task task);
-}
 
 
 class InMemoryTaskSerivce : ITaskService {
@@ -107,11 +101,11 @@ class InMemoryTaskSerivce : ITaskService {
     }
     
     public void DeleteTaskById(int id) {
-        _tasks.RemoveAll(task => id == task.id); 
+        _tasks.RemoveAll(task => id == task.Id); 
     }
 
     public Task GetTaskById(int id) {
-        return _tasks.SingleOrDefault(t => id == t.id);
+        return _tasks.SingleOrDefault(t => id == t.Id);
     }
 
     public List<Task> GetTasks() { 
