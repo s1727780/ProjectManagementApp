@@ -7,4 +7,14 @@ namespace ProjectManagementApp.Model
         public string Name { get; set; }
         public string Description { get; set; }
     }
+
+    public class ProjectContext : DbContext
+    {
+        public DbSet<Project> Projects { get; set; }
+
+        public ProjectContext(DbContextOptions options) : base(options)
+        {
+
+        }
+    }
 }

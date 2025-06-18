@@ -1,4 +1,6 @@
-﻿namespace ProjectManagementApp.Model
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ProjectManagementApp.Model
 {
     public class Task{
         public int Id { get; set; }
@@ -6,6 +8,16 @@
         public DateTime DueDate { get; set; }
         public bool IsCompleted { get; set; }
         public int? ProjectId { get; set; }
+    }
+
+    public class TaskContext : DbContext
+    {
+        public DbSet<Task> Tasks { get; set; }
+
+        public TaskContext(DbContextOptions options) : base(options)
+        {
+
+        }
     }
 
     interface ITaskService
