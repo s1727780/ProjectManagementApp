@@ -17,4 +17,12 @@ namespace ProjectManagementApp.Model
 
         }
     }
+
+    interface IProjectService
+    {
+        Project? GetProjectById(int id);
+        List<Project> GetProjects();
+        void DeleteProjectById(int id);
+        Project AddProject(Project project);
+    }
 }
