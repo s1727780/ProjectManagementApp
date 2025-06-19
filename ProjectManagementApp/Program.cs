@@ -115,10 +115,16 @@ class InMemoryTaskSerivce : ITaskService {
     }
 
     public Task GetTaskById(int id) {
+#pragma warning disable CS8603 // Possible null reference return.
         return _tasks.SingleOrDefault(t => id == t.Id);
+#pragma warning restore CS8603 
     }
 
     public List<Task> GetTasks() { 
         return _tasks; 
+    }
+
+    public List<Task> GetTasksByProjectId(int id) {
+        return _tasks.FindAll(t => id == t.ProjectId);
     }
 }

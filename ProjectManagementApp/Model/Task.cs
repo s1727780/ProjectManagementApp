@@ -26,6 +26,7 @@ namespace ProjectManagementApp.Model
         List<Task> GetTasks();
         void DeleteTaskById(int id);
         Task AddTask(Task task);
+        List<Task> GetTasksByProjectId(int id);
     }
 
 }
