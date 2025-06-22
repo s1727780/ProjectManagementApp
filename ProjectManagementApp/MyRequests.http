@@ -10,10 +10,10 @@ POST http://localhost:5078/tasks
 content-type: application/json
 
 {
-  "id": 1,
-  "name": "Write Demo",
-  "dueDate": "2025-06-20",
-  "isCompleted": false
+  "Name": "Write Demo",
+  "DueDate": "2026-06-21",
+  "IsCompleted": false,
+  "ProjectId": null
 }
 
 ### Post task 2
@@ -21,10 +21,24 @@ content-type: application/json
 POST http://localhost:5078/tasks
 content-type: application/json
 {
-  "id": 2,
-  "name": "Write Demo 2",
-  "dueDate": "2025-06-21",
-  "isCompleted": false
+
+  "Name": "Write Demo 2",
+  "DueDate": "2026-06-26",
+  "IsCompleted": false,
+  "ProjectId": null
+}
+
+
+### Post task 3
+
+POST http://localhost:5078/tasks
+Content-Type: application/json
+
+{
+  "Name": "Write Demo",
+  "DueDate": "2026-06-21",
+  "IsCompleted": false,
+  "ProjectId": null
 }
 
 
@@ -48,10 +62,10 @@ GET http://localhost:5078/todos/1
 POST http://localhost:5078/tasks
 content-type: application/json
 {
-    "id": 3,
-    "name": "Endpoint past",
-    "dueDate": "2025-06-01",
-    "isCompleted": false
+    "Name": "Endpoint past",
+    "DueDate": "2025-06-01",
+    "IsCompleted": false,
+    "ProjectId": null
 }
 
 ### Endpoint filter completed
@@ -59,10 +73,10 @@ content-type: application/json
 POST http://localhost:5078/tasks
 content-type: application/json
 {
-    "id": 4,
-    "name": "Redirect Demo ",
-    "dueDate": "2025-06-21",
-    "isCompleted": true
+    "Name": "Redirect Demo ",
+    "DueDate": "2025-06-21",
+    "IsCompleted": true,
+    "ProjectId": null
 }
 
 ### Endpoint filter past due
@@ -70,9 +84,9 @@ content-type: application/json
 POST http://localhost:5078/tasks
 content-type: application/json
 {
-    "id": 5,
-    "name": "Redirect Demo ",
-    "dueDate": "2025-06-01",
-    "isCompleted": true
+    "Name": "Redirect Demo ",
+    "DueDate": "2025-06-01",
+    "IsCompleted": true,
+    "ProjectId": null
 }
 
