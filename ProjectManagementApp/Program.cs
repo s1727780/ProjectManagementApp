@@ -10,12 +10,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 // Host configuration goes here
 
 // - Register service
-builder.Services.AddSingleton<ITaskService>(new InMemoryTaskSerivce());
+builder.Services.AddScoped<ITaskService, EfCoreTaskService>();
 
-builder.Services.AddDbContext<ProjectContext>(options =>
-{
-    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true");
-});
 builder.Services.AddDbContext<TaskContext>(options =>
 {
     options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true");
@@ -29,6 +25,7 @@ WebApplication app = builder.Build();
 // - Built-in
 app.UseRewriter(new RewriteOptions().AddRedirect("todos/(.*)", "tasks/$1"));
 
+
 // - Custom
 app.Use(async (context, next) =>
 {
@@ -38,10 +35,7 @@ app.Use(async (context, next) =>
 });
 
 
-
 // API
-
-List<Task> tasks = new List<Task>();
 
 #region Tasks
 
@@ -63,7 +57,7 @@ app.MapGet("/tasks/{id}", Results<Ok<Task>, NotFound> (int id, ITaskService serv
 app.MapPost("/tasks", (Task task, ITaskService service) =>
 {
     service.AddTask(task);
-    return TypedResults.Created("/tasks/{id}", task);
+    return TypedResults.Created("/tasks/{task.Id}", task);
 
 }).AddEndpointFilter(async (context, next) => {     // Endpoint filter
     Task taskArguement = context.GetArgument<Task>(0);
@@ -99,32 +93,3 @@ app.MapDelete("/tasks/{id}", (int id, ITaskService service) =>
 
 
 app.Run();
-
-
-
-class InMemoryTaskSerivce : ITaskService {
-    private readonly List<Task> _tasks = [];
-    
-    public Task AddTask(Task task) { 
-        _tasks.Add(task); 
-        return task; 
-    }
-    
-    public void DeleteTaskById(int id) {
-        _tasks.RemoveAll(task => id == task.Id); 
-    }
-
-    public Task GetTaskById(int id) {
-#pragma warning disable CS8603 // Possible null reference return.
-        return _tasks.SingleOrDefault(t => id == t.Id);
-#pragma warning restore CS8603 
-    }
-
-    public List<Task> GetTasks() { 
-        return _tasks; 
-    }
-
-    public List<Task> GetTasksByProjectId(int id) {
-        return _tasks.FindAll(t => id == t.ProjectId);
-    }
-}
