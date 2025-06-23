@@ -1,4 +1,7 @@
-﻿namespace ProjectManagementApp.Model {
+﻿using ProjectManagementApp.Model;
+using Task = ProjectManagementApp.Model.Task;
+
+namespace ProjectManagementApp.Service {
     public class EfCoreTaskService : ITaskService {
         private readonly TaskContext _context;
 
@@ -14,8 +17,7 @@
 
         public void DeleteTaskById(int id) {
             var task = _context.Tasks.Find(id);
-            if (task != null)
-            {
+            if (task != null) {
                 _context.Tasks.Remove(task);
                 _context.SaveChanges();
             }
@@ -34,6 +36,6 @@
                 .Where(t => t.ProjectId == id)
                 .ToList();
         }
-
     }
+    
 }
