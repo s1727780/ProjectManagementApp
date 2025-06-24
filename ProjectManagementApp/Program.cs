@@ -4,19 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using ProjectManagementApp.Model;
 using ProjectManagementApp.Service;
 using Task = ProjectManagementApp.Model.Task;
-
+using Microsoft.Extensions.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Host configuration goes here
 
 // - Register service
-builder.Services.AddScoped<ITaskService, EfCoreTaskService>();
 
-builder.Services.AddDbContext<TaskContext>(options =>
-{
-    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-53bc9b9d-9d6a-45d4-8429-2a2761773502;Trusted_Connection=True;MultipleActiveResultSets=true");
-});
 
 WebApplication app = builder.Build();
 
@@ -81,6 +76,11 @@ app.MapPost("/tasks", (Task task, ITaskService service) =>
     return await next(context);
 
 
+});
+
+app.MapPut("/tasks/{id}", (Task task, ITaskService service) => {
+    Task t = service.UpdateTask(task);
+    return TypedResults.Ok(t);
 });
 
 app.MapDelete("/tasks/{id}", (int id, ITaskService service) =>

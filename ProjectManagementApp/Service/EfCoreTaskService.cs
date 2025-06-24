@@ -36,6 +36,18 @@ namespace ProjectManagementApp.Service {
                 .Where(t => t.ProjectId == id)
                 .ToList();
         }
+        public Task UpdateTask(Task task) {
+            Task? t = _context.Tasks.Find(task.Id);
+            if (t == null) {
+                AddTask(task);
+                return task;
+            }
+            
+            _context.Update(task);
+            return task;
+
+            
+        }
     }
     
 }
