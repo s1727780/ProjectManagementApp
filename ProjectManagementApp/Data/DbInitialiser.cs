@@ -10,8 +10,9 @@ namespace ProjectManagementApp.Data {
                 return;
             }
 
-            Project[] projects = new Project[] {
-                new Project{ }
+            Project[] projects = {
+                new Project{Name="P01", Description="Test project 1" },
+                new Project{Name="P02", Description="Test project 2" }
             };
 
             foreach (var project in projects) { 
@@ -19,8 +20,11 @@ namespace ProjectManagementApp.Data {
             }
             context.SaveChanges();
 
-            Task[] tasks = new Task[] {
-                new Task{ }
+            Task[] tasks = {
+                new Task{Name="T10", DueDate = new DateTime(2026, 1, 1), IsCompleted = false, ProjectId = 1},
+                new Task{Name="T20", DueDate = new DateTime(2026, 2, 1), IsCompleted = false, ProjectId = 2},
+                new Task{Name="T21", DueDate = new DateTime(2026, 2, 2), IsCompleted = false, ProjectId = 2},
+                new Task{Name="T11", DueDate = new DateTime(2026, 1, 2), IsCompleted = false, ProjectId = 1}
             };
 
             foreach (var task in tasks) { 
