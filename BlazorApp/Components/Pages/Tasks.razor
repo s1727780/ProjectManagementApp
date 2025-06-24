@@ -1,0 +1,56 @@
+﻿@page "/tasks"
+@inject HttpClient Http
+
+<PageTitle>Tasks</PageTitle>
+
+<h3>Tasks</h3>
+
+@if (error)
+{
+    <p style="color:red">Cannot connect to server</p>
+    
+}
+else if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (products.Count == 0)
+{
+    <p>No products found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in products)
+        {
+            <li>@product.Name (@product.ProjectId.ToString()))</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<Product>? products;
+    private bool error = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await Http.GetFromJsonAsync<List<Product>>("http://localhost:5078/tasks");
+        }
+        catch
+        {
+            error = true;
+        }
+    }
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime? DueDate { get; set; }
+        public bool IsCompleted { get; set; }
+        public int? ProjectId { get; set; }
+
+    }
+}

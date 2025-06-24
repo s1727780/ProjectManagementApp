@@ -2,7 +2,7 @@
 
 ### Get all tasks
 
-GET http://localhost:5078/tasks
+GET https://localhost:5078/tasks
 
 ### Post task 1
 
