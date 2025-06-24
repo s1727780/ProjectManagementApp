@@ -8,16 +8,6 @@ namespace ProjectManagementApp.Model
         public string Description { get; set; }
     }
 
-    public class ProjectContext : DbContext
-    {
-        public DbSet<Project> Projects { get; set; }
-
-        public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
-        {
-
-        }
-    }
-
     interface IProjectService
     {
         Project? GetProjectById(int id);
