@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using ProjectManagementApp;
+using ProjectManagementApp.Data;
 using ProjectManagementApp.Model;
 using ProjectManagementApp.Service;
 using Task = ProjectManagementApp.Model.Task;
-using Microsoft.Extensions.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 WebApplication app = builder.Build();
 
-
+DbInitialiser.CreateDbIfNotExists(app);
 // Middleware
 
 // - Built-in
@@ -94,3 +96,4 @@ app.MapDelete("/tasks/{id}", (int id, ITaskService service) =>
 
 
 app.Run();
+
